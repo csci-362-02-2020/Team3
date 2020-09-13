@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#	Constants
+# Constants
 DIRECTORY=${PWD##*/}
 TITLE="Here are the files located in this directory: $DIRECTORY"
 RIGHT_NOW="$(date +"%x %r %Z")"
@@ -8,13 +8,13 @@ TIME_STAMP="Updated on $RIGHT_NOW by $USER"
 FILENAME="index.html"
 
 
-#	Function to list the contents of the current directory
+# Function to list the contents of the current directory
 list_directory(){
 	printf '%s\n' *
 }
 
 
-#	Create the HTML file
+# Create the HTML file
 
 # EOF = here document which is a section of code that is treated like a separate file
 cat > $FILENAME <<_EOF_
@@ -36,7 +36,8 @@ cat > $FILENAME <<_EOF_
 		background-color: #FFF;
 
 	}
-	h1 {color: #1F1B24;
+	h1 {
+		color: #1F1B24;
 		margin-left: 
 		font-size: 40px;
 	}
@@ -46,14 +47,15 @@ cat > $FILENAME <<_EOF_
 		padding-right: 0px;
 	}
 
-	pre {background-color: #EEE;
+	pre {
 		color: #1F1B24;
 		font-size: 25px;
 	}
 
-	footer {color: #1F1B24;
-			margin-left;
-			font-size: 12px;
+	footer {
+		color: #1F1B24;
+		margin-left;
+		font-size: 12px;
 	}
 
 	</style>
@@ -68,5 +70,5 @@ cat > $FILENAME <<_EOF_
 	</html>
 _EOF_
 
-
-open ./$FILENAME
+# Open index.html file
+firefox $FILENAME
