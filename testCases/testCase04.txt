@@ -1,0 +1,8 @@
+04
+DrugsByNameComparator
+This class will compare two strings and put them in alphabetical order
+compare(String d1, String d2)
+This test will test the compare() when d1 comes before d2 alphbetically, but d2 has a number in it that would make it come first
+2Allegra 1Dayquil
+1
+driver
