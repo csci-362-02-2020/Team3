@@ -2,7 +2,7 @@
 DrugsByNameComparator
 This class will compare two strings and put them in alphabetical order
 compare(String d1, String d2)
-This test will test the compare() when d2 comes before d1 alphbetically
+This test will test the compare() when d2 comes before d1 alphabetically
 Dayquil Allegra
 -1
 driver
