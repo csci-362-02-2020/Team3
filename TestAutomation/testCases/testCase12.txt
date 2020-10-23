@@ -1,0 +1,7 @@
+12
+OpenmrsUtil
+This method returns true if a string only contains digits
+containsOnlyDigits
+-842
+false
+containsOnlyDigitsDriver
