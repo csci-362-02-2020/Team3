@@ -1,5 +1,5 @@
 //Test ID
-//DrugsByNameCompare
+//Class
 //Requirments
 //Method
 //summary
