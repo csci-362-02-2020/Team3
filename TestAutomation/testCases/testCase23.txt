@@ -1,0 +1,7 @@
+22
+OpenmrsUtil
+This method returns true if a string has upper and lower case letters
+containsUpperAndLowerCase
+I'm well how are YOU?
+true
+containsUpperAndLowerCaseDriver
