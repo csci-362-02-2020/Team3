@@ -1,8 +1,0 @@
-05
-DrugsByNameComparator
-This class will compare two strings and put them in alphabetical order
-compare(String d1, String d2)
-This test will test the compare() when d1 is a string and d2 is null
-Allegra NULL
-Error
-driver
