@@ -1,0 +1,7 @@
+08
+DateUtil
+This method will return a Date with the milliseconds tuncated
+truncateToSeconds
+0
+Wed Dec 31 19:00:00 EST 1969
+DateUtilDriver
