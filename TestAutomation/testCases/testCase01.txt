@@ -1,8 +1,0 @@
-01
-DrugsByNameComparator
-This class will compare two strings and put them in alphabetical order
-compare(String d1, String d2)
-This test will test the compare() when d1 comes before d2 alphbetically
-Allegra Dayquil
-1
-driver
