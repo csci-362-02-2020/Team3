@@ -1,0 +1,7 @@
+05
+DrugByNameComparator
+This method will compare two strings and return an integer based off the ordering of the two Drug names.
+compare
+2Allegra 1Allegra 
+0
+DrugsByNameDriver
