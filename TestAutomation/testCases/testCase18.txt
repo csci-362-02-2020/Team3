@@ -1,0 +1,7 @@
+18
+OpenmrsUtil
+This method turns a long into an integer, as long as it does not exceed the int memory limit
+convertToInteger
+-83878527402
+null
+convertToIntegerDriver
