@@ -1,4 +1,11 @@
 #!/bin/bash
+clear
+
+# for debugging purposes
+# exec 5> command.txt
+# BASH_XTRACEFD="5"
+
+echo "----------Running test script----------"
 
 # Constants
 DIRECTORY=${PWD##*/}
@@ -17,92 +24,75 @@ list_directory(){ printf '%s\n' *;}
 
 # cd to testCaseExecutables
 cd ../testCasesExecutables
-dir=$PWD
-echo $PWD
 
-# clean any existing testCaseExecutables
-rm -f ..$dir/*.class
+# clean any previous files and directories
+rm -f ../testCaseExecutables/*.class
+
 
 # compile all test case executables
-javac  $dir/*.java
-# echo "All test executables have been compiled"
+javac  -d . *.java
+echo "All test executables have been compiled"
 
 # create array to read text case files
-# declare -a array
+declare -a array
 
-
+# function to run tests and add results to HTML table
 function run_tests() {
     for file in ../testCases/*.txt 
     do
+        i=0;
         echo \<tr\>
         while read line || [ -n "$line" ];
         do
-            array+=("$line")
             echo \<td\>$line\<\/td\>
-        done < "$file"
-        
-        declare testID=${array[0]}
-        declare class=${array[1]}
-        declare requirements=${array[2]}
-        declare method=${array[3]}
-        declare summary=${array[4]}
-        declare inputs=${array[5]}
-        declare expected_outputs=${array[6]}
-        declare driver_name=${array[7]}
-        declare result
+            array[$i]="$line"
+            # echo $array[$i]
+            i=$((i+1))
+        done < $file
 
-        if [[$method == "containsOnlyDigitsDriver"]]
-        then
+            # testID=${array[0]}
+            # class=${array[1]}
+            # requirements=${array[2]}
+            # method=${array[3]}
+            input=${array[4]}
+            expected_output=${array[5]}
+            driver_name=${array[6]}
+
+        if [[ $driver_name == "containsOnlyDigitsDriver" ]]; then
             result=$(java testCaseExecutables.containsOnlyDigitsDriver "$input")
         fi
 
-        if [[$method == "containsUpperAndLowerCaseDriver"]]
-        then
-            result=$(java testCaseExecutables.containsUpperAndLowerCaseDriver "$input")
+        if [[ "$driver_name" == "containsUpperAndLowerCaseDriver" ]]; then
+            result="$(java testCaseExecutables.containsUpperAndLowerCaseDriver "$input")"
         fi
 
-        if [[$method == "convertToIntegerDriver"]]
-        then
-            result=$(java testCaseExecutables.convertToIntegerDriver "$input")
+        if [[ "$driver_name" == "convertToIntegerDriver" ]]; then
+            result="$(java testCaseExecutables.convertToIntegerDriver "$input")"
         fi
 
-        if [[$method == "DateUtilDriver"]]
-        then
-            result=$(java testCaseExecutables.DateUtilDriver "$input")
+        if [[ "$driver_name" == "DateUtilDriver" ]]; then
+            result="$(java testCaseExecutables.DateUtilDriver "$input")"
         fi
 
-        if [[$method == "DrugsByNameDriver"]]
-        then
+        if [[ $driver_name == "DrugsByNameDriver" ]]; then
             result=$(java testCaseExecutables.DrugsByNameDriver "$input")
         fi
-        echo \<td\>$result\<\/td\>
 
-        if [[$result == $expected]]
-        then
-            echo \<td\>"Passed"\<\/td\>
-        else
-            echo \<td\>"Failed"\<\/td\>
-        fi
-
-        echo \<\/tr\>
-
+            # set -x
+            echo \<td\>$result\<\/td\>
+            if [[ $result==$expected_output ]]; then
+            
+                echo \<td\>"Pass"\<\/td\>
+            else
+                echo \<td\>"Fail"\<\/td\>
+            fi
+            # set +x
+        echo \</tr\>
     done
 }
 
-# read_text_files
-
-echo "Array items:"
-for item in ${array[*]}
-do
-    printf " %s\n" $item
-done
-
-echo "Array size: ${#array[*]}"
-
 
 # EOF = heredoc which is a section of code that is treated like a separate file
-
-
 cat > $FILENAME <<_EOF_
 	<!DOCTYPE html>
 	<html>
@@ -161,7 +151,7 @@ cat > $FILENAME <<_EOF_
         <h2>Test Results</h2>
         <table>
             <tr>
-                <th>Test ID</th>
+                <th>Test  ID</th>
                 <th>Class Name</th>
                 <th>Summary</th>
                 <th>Method Type</th>
@@ -169,6 +159,7 @@ cat > $FILENAME <<_EOF_
                 <th>Expected Outputs</th>
                 <th>Driver</th>
                 <th>Results</th>
+                <th>Pass/Fail</th>
             </tr>
             $(run_tests)
         </table><br>
@@ -177,7 +168,9 @@ cat > $FILENAME <<_EOF_
 	</html>
 _EOF_
 
+echo "----------Opening results in browser----------"
+
 open $FILENAME
 
-rm -f ../reports/$FILENAME
+# rm -f ../reports/$FILENAME
 rm -f ../testCases/$FILENAME
