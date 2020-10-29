@@ -170,7 +170,7 @@ _EOF_
 
 echo "----------Opening results in browser----------"
 
-open $FILENAME
+xdg-open $FILENAME
 
 # rm -f ../reports/$FILENAME
 rm -f ../testCases/$FILENAME
