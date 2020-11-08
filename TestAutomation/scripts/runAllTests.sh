@@ -3,9 +3,7 @@ clear
 
 # for debugging purposes
 # exec 5> command.txt
-# BASH_XTRACEFD="5"
-
-echo "----------Running test script----------"
+# export BASH_XTRACEFD=5
 
 # Constants
 TITLE="Team 3 | Carrillo, Krawczyk, Suzara"
@@ -15,30 +13,30 @@ FILENAME="testResults.html"
 PACKAGE="testCaseExecutables"
 
 # Create the HTML file
-# touch reports/$FILENAME
+echo "----------Running test script----------"
+touch reports/$FILENAME
 > reports/$FILENAME
 
 # cd to testCaseExecutables
 cd testCasesExecutables
-
 # compile all test case executables
 mkdir testCaseExecutables
 javac  -d . *.java
 echo "All test executables have been compiled"
 
-# create array to read text case files
-declare -a array
 
 # function to run tests and add results to HTML table
-function run_tests() {
+set -x
+function runTests {
+    declare -a array
     for file in ../testCases/*.txt 
     do
         i=0;
         echo \<tr\>
-        while read line || [[ -n "$line" ]];
+        while IFS= read -r line || [[ -n "$line" ]];
         do
             echo \<td\>$line\<\/td\>
-            array[$i]="$line"
+            array[$i]=$line
             i=$((i+1))
         done < $file
 
@@ -47,23 +45,22 @@ function run_tests() {
             # requirements=${array[2]}
             # method=${array[3]}
             input=${array[4]}
+            echo "input: $input"
             expected_output=${array[5]}
             driver_name=${array[6]}
-
             result=$(java $PACKAGE.$driver_name "$input")
-
             echo \<td\>$result\<\/td\>
-            if [[ $result==$expected_output ]]; then
-            
-                echo \<td\>"Pass"\<\/td\>
+            # echo " **result:"$result" expected_output:"$expected_output" **" > command.txt
+            set -x
+            if [ "$result" = "$expected_output" ]; then
+                echo \<td style="color:green;font-weight:bold;"\>Passed\<\/td\>
             else
-                echo \<td\>"Fail"\<\/td\>
+                echo \<td style="color:red;font-weight:bold;"\>Failed\<\/td\>
             fi
+            set +x
         echo \</tr\>
-        <&-
     done
 }
-
 
 # EOF = heredoc which is a section of code that is treated like a separate file
 cat > $FILENAME <<_EOF_
@@ -131,10 +128,10 @@ cat > $FILENAME <<_EOF_
                 <th>Inputs</th>
                 <th>Expected Outputs</th>
                 <th>Driver</th>
-                <th>Results</th>
+                <th>Result</th>
                 <th>Pass/Fail</th>
             </tr>
-            $(run_tests)
+            $(runTests)
         </table><br>
         <footer>$TIME_STAMP</footer>
 	</body>
@@ -142,12 +139,22 @@ cat > $FILENAME <<_EOF_
 _EOF_
 
 echo "----------Opening results in browser----------"
-
-xdg-open $FILENAME
+# xdg-open $FILENAME
+open $FILENAME
 
 # clean any previous files and directories
-rm -f testCaseExecutables/*.class
-rm -d testCaseExecutables
-rm -f $FILENAME
-rm -f /reports/$FILENAME
-rm -f /testCases/$FILENAME
+function cleanUp {
+    rm -f testCaseExecutables/*.class
+    rm -d testCaseExecutables
+    rm -f $FILENAME
+    rm -f /reports/$FILENAME
+    rm -f /testCases/$FILENAME
+}
+
+cleanUp
+
+
+
+
+
+
