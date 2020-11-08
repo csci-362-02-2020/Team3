@@ -8,28 +8,21 @@ clear
 echo "----------Running test script----------"
 
 # Constants
-DIRECTORY=${PWD##*/}
 TITLE="Team 3 | Carrillo, Krawczyk, Suzara"
 RIGHT_NOW="$(date +"%x %r %Z")"
 TIME_STAMP="Updated on $RIGHT_NOW by $USER"
 FILENAME="testResults.html"
-PACKAGE="testCasesExecutables"
+PACKAGE="testCaseExecutables"
 
 # Create the HTML file
-touch ../reports/$FILENAME
-> ../reports/$FILENAME
-
-# list contents of current directory
-list_directory(){ printf '%s\n' *;}
+# touch reports/$FILENAME
+> reports/$FILENAME
 
 # cd to testCaseExecutables
-cd ../testCasesExecutables
-
-# clean any previous files and directories
-rm -f ../testCaseExecutables/*.class
-
+cd testCasesExecutables
 
 # compile all test case executables
+mkdir testCaseExecutables
 javac  -d . *.java
 echo "All test executables have been compiled"
 
@@ -42,11 +35,10 @@ function run_tests() {
     do
         i=0;
         echo \<tr\>
-        while read line || [ -n "$line" ];
+        while read line || [[ -n "$line" ]];
         do
             echo \<td\>$line\<\/td\>
             array[$i]="$line"
-            # echo $array[$i]
             i=$((i+1))
         done < $file
 
@@ -58,27 +50,8 @@ function run_tests() {
             expected_output=${array[5]}
             driver_name=${array[6]}
 
-        if [[ $driver_name == "containsOnlyDigitsDriver" ]]; then
-            result=$(java testCaseExecutables.containsOnlyDigitsDriver "$input")
-        fi
+            result=$(java $PACKAGE.$driver_name "$input")
 
-        if [[ "$driver_name" == "containsUpperAndLowerCaseDriver" ]]; then
-            result="$(java testCaseExecutables.containsUpperAndLowerCaseDriver "$input")"
-        fi
-
-        if [[ "$driver_name" == "convertToIntegerDriver" ]]; then
-            result="$(java testCaseExecutables.convertToIntegerDriver "$input")"
-        fi
-
-        if [[ "$driver_name" == "DateUtilDriver" ]]; then
-            result="$(java testCaseExecutables.DateUtilDriver "$input")"
-        fi
-
-        if [[ $driver_name == "DrugsByNameDriver" ]]; then
-            result=$(java testCaseExecutables.DrugsByNameDriver "$input")
-        fi
-
-            # set -x
             echo \<td\>$result\<\/td\>
             if [[ $result==$expected_output ]]; then
             
@@ -86,8 +59,8 @@ function run_tests() {
             else
                 echo \<td\>"Fail"\<\/td\>
             fi
-            # set +x
         echo \</tr\>
+        <&-
     done
 }
 
@@ -172,5 +145,9 @@ echo "----------Opening results in browser----------"
 
 xdg-open $FILENAME
 
-# rm -f ../reports/$FILENAME
-rm -f ../testCases/$FILENAME
+# clean any previous files and directories
+rm -f testCaseExecutables/*.class
+rm -d testCaseExecutables
+rm -f $FILENAME
+rm -f /reports/$FILENAME
+rm -f /testCases/$FILENAME
