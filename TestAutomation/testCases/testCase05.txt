@@ -1,7 +1,7 @@
 05
-DrugByNameComparator
-This method will compare two strings and return an integer based off the ordering of the two Drug names.
-compare
-2Allegra 1Allegra 
-0
-DrugsByNameDriver
+OpenmrsUtil
+This method will take a date convert it a calender, then shift the time to be the last second of the day on that date.
+getLastMomentOfDay
+914209500000
+Sun Dec 20 23:59:59 EST 1998
+getLastMomentOfDayDriver
