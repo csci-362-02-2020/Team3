@@ -21,12 +21,10 @@ touch reports/$FILENAME
 cd testCasesExecutables
 # compile all test case executables
 mkdir testCaseExecutables
-javac  -d . *.java
-echo "All test executables have been compiled"
+javac  -d . *.java && echo "All test executables have been compiled"
 
 
 # function to run tests and add results to HTML table
-set -x
 function runTests {
     declare -a array
     for file in ../testCases/*.txt 
@@ -45,19 +43,16 @@ function runTests {
             # requirements=${array[2]}
             # method=${array[3]}
             input=${array[4]}
-            echo "input: $input"
             expected_output=${array[5]}
             driver_name=${array[6]}
-            result=$(java $PACKAGE.$driver_name "$input")
+            result=$(java $PACKAGE.$driver_name "$input") || echo "$driver_name: Failed"
             echo \<td\>$result\<\/td\>
             # echo " **result:"$result" expected_output:"$expected_output" **" > command.txt
-            set -x
             if [ "$result" = "$expected_output" ]; then
                 echo \<td style="color:green;font-weight:bold;"\>Passed\<\/td\>
             else
                 echo \<td style="color:red;font-weight:bold;"\>Failed\<\/td\>
             fi
-            set +x
         echo \</tr\>
     done
 }
@@ -139,8 +134,8 @@ cat > $FILENAME <<_EOF_
 _EOF_
 
 echo "----------Opening results in browser----------"
-# xdg-open $FILENAME
-open $FILENAME
+xdg-open $FILENAME
+# open $FILENAME
 
 # clean any previous files and directories
 function cleanUp {
@@ -151,10 +146,5 @@ function cleanUp {
     rm -f /testCases/$FILENAME
 }
 
+sleep 3
 cleanUp
-
-
-
-
-
-
