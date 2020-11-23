@@ -4,4 +4,4 @@ cd to Team3/TestAutomation
 
 chmod u+x runAllTests.sh
 
-./runAllTests.sh
+bash scripts/runAllTests.sh
