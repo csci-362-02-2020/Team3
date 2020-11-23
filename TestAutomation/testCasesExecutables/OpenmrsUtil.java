@@ -13,39 +13,6 @@ import java.util.Arrays;
 public class OpenmrsUtil{
 
 	/**
-	 * Compares two java.util.Date objects, but handles java.sql.Timestamp (which is not directly
-	 * comparable to a date) by dropping its nanosecond value.
-	 */
-	public static int compare(Date d1, Date d2) {
-		if (d1 instanceof Timestamp && d2 instanceof Timestamp) {
-			return d1.compareTo(d2);
-		}
-		if (d1 instanceof Timestamp) {
-			d1 = new Date(d1.getTime());
-		}
-		if (d2 instanceof Timestamp) {
-			d2 = new Date(d2.getTime());
-		}
-		return d1.compareTo(d2);
-	}
-
-	/**
-	 * Compares two Date/Timestamp objects, treating null as the earliest possible date.
-	 */
-	public static int compareWithNullAsEarliest(Date d1, Date d2) {
-		if (d1 == null && d2 == null) {
-			return 0;
-		}
-		if (d1 == null) {
-			return -1;
-		} else if (d2 == null) {
-			return 1;
-		} else {
-			return compare(d1, d2);
-		}
-	}
-
-	/**
 	 * Gets the date having the last millisecond of a given day. Meaning that the hours, seconds,
 	 * and milliseconds are the latest possible for that day.
 	 * 
@@ -58,60 +25,13 @@ public class OpenmrsUtil{
 		calender.set(Calendar.HOUR_OF_DAY, 23);
 		calender.set(Calendar.MINUTE, 59);
 		calender.set(Calendar.SECOND, 59);
+		//calender.set(Calendar.SECOND, 58); //This is an error
 		calender.set(Calendar.MILLISECOND, 999);
 		
 		return calender.getTime();
 	}
 
 
-	public static Date safeDate(Date d1) {
-		return new Date(d1.getTime());
-	}
-
-	// /**
-	//  * Tests if the given String starts with any of the specified prefixes
-	//  * 
-	//  * @param str the string to test
-	//  * @param prefixes an array of prefixes to test against
-	//  * @return true if the String starts with any of the specified prefixes, otherwise false.
-	//  */
-	// public static boolean stringStartsWith(String str, String[] prefixes) {
-	// 	for (String prefix : prefixes) {
-	// 		if (StringUtils.startsWith(str, prefix)) {
-	// 			return true;
-	// 		}
-	// 	}
-		
-	// 	return false;
-	// }
-
-
-	/**
-	 * Loops over the collection to check to see if the given object is in that collection. This
-	 * method <i>only</i> uses the .equals() method for comparison. This should be used in the
-	 * patient/person objects on their collections. Their collections are SortedSets which use the
-	 * compareTo method for equality as well. The compareTo method is currently optimized for
-	 * sorting, not for equality. A null <code>obj</code> will return false
-	 * 
-	 * @param objects collection to loop over
-	 * @param obj Object to look for in the <code>objects</code>
-	 * @return true/false whether the given object is found
-	 * <strong>Should</strong> use equals method for comparison instead of compareTo given List collection
-	 * <strong>Should</strong> use equals method for comparison instead of compareTo given SortedSet collection
-	 */
-	public static boolean collectionContains(Collection<?> objects, Object obj) {
-		if (obj == null || objects == null) {
-			return false;
-		}
-		
-		for (Object o : objects) {
-			if (o != null && o.equals(obj)) {
-				return true;
-			}
-		}
-		
-		return false;
-	}
 	
 		/**
 	 * @param test the string to test
@@ -122,7 +42,9 @@ public class OpenmrsUtil{
 	 */
 	public static boolean containsUpperAndLowerCase(String test) {
 		if (test != null) {
+
 			Pattern pattern = Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])[\\w|\\W]*$");
+			//Pattern pattern = Pattern.compile("(?=.*?[a-z])[\\w|\\W]*$"); //This is our Error
 			Matcher matcher = pattern.matcher(test);
 			return matcher.matches();
 		}
@@ -144,6 +66,7 @@ public class OpenmrsUtil{
 			}
 		}
 		return !test.isEmpty();
+		//return test.isEmpty(); //This is an error
 	}
 
 		/**
@@ -155,7 +78,9 @@ public class OpenmrsUtil{
 	 * @throws IllegalArgumentException if the long value does not fit into an integer
 	 */
 	public static Integer convertToInteger(Long longValue) {
-		if (longValue < Integer.MIN_VALUE || longValue > Integer.MAX_VALUE) {
+		
+		if (longValue < Integer.MIN_VALUE || longValue > Integer.MAX_VALUE) { 
+		//if (longValue > Integer.MIN_VALUE || longValue < Integer.MAX_VALUE) { //This is an error
 			return null;
 			//throw new IllegalArgumentException(longValue + " cannot be cast to Integer without changing its value.");
 		}

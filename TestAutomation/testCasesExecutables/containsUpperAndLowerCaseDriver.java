@@ -14,8 +14,8 @@ import java.util.Comparator;
 			if(args[0].toLowerCase().compareTo("null") == 0){
 				input = null;
 			}
-			OpenmrsUtil o1 = new OpenmrsUtil();		//Stores the expected val in var
-			boolean actual_output = o1.containsUpperAndLowerCase(input);  //Runs the method and saves output
+		//Stores the expected val in var
+			boolean actual_output = OpenmrsUtil.containsUpperAndLowerCase(input);  //Runs the method and saves output
 			System.out.println(actual_output);
 
 			//compare expected output to actual, if they are the same then the test is passed

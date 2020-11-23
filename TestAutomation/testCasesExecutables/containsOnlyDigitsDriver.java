@@ -6,8 +6,8 @@ public class containsOnlyDigitsDriver{
 			if(args[0].toLowerCase().compareTo("null") == 0){
 				input = null;
 			}
-		OpenmrsUtil oMrs = new OpenmrsUtil();
-		boolean output = oMrs.containsOnlyDigits(input);
+		
+		boolean output = OpenmrsUtil.containsOnlyDigits(input);
 		System.out.println(output);
 	}
 }

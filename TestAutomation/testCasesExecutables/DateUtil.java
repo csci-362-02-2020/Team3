@@ -18,6 +18,7 @@ public class DateUtil {
 	 */
 	public static Date truncateToSeconds(Date date) {
 		Instant instant = date.toInstant().truncatedTo(ChronoUnit.SECONDS);
+		//Instant instant = date.toInstant().truncatedTo(ChronoUnit.HOURS); //This is an error
 		return Date.from(instant);
 	}
 }

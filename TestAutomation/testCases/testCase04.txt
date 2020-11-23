@@ -1,7 +1,7 @@
 04
 OpenmrsUtil
-This method will take a date convert it a calender, then shift the time to be the last second of the day on that date.
+This method will take a date and time, then shift the time to be the last second of the day on that date.
 getLastMomentOfDay
-1000000000000
+2001/9/8/6/56/0
 Sat Sep 08 23:59:59 EDT 2001
 getLastMomentOfDayDriver

@@ -9,9 +9,21 @@ public class getLastMomentOfDayDriver{
 			System.out.println("No input to test");
 		}
 		else{		
-			long dateVal = Long.parseLong(args[0]);
-			Date date1 = new Date(dateVal);
-			System.out.println(OpenmrsUtil.getLastMomentOfDay(date1));
+			String[] dateInfo = (args[0].split("/"));
+			int[] date = new int[dateInfo.length];
+			for(int i = 0; i <dateInfo.length; i++){
+
+				date[i]= Integer.parseInt(dateInfo[i]);
+				if(i ==0){
+					date[i] = date[i] - 1900;
+				}
+				if(i == 1){
+					date[i] = date[i] - 1;
+				}
+			}
+			Date date1 = new 		Date(date[0],date[1],date[2],date[3],date[4],date[5]);
+			
+				System.out.println(OpenmrsUtil.getLastMomentOfDay(date1));
 		}
 	}
 }

@@ -1,7 +1,7 @@
 06
 DateUtil
-This method will return a Date with the milliseconds tuncated
+This method will return a Date and time with the milliseconds truncated
 truncateToSeconds
-1234094
+1969/12/31/19/20/34
 Wed Dec 31 19:20:34 EST 1969
 DateUtilDriver
