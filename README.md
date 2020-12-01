@@ -1,6 +1,7 @@
 # Team3
 
 ## How to Run Our Automatic Testing Framework
+1. Make sure you have java 8 installed on your machine 
 
 1. Go to our github repository: https://github.com/csci-362-02-2020/Team3
 
