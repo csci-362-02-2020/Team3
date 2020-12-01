@@ -20,3 +20,25 @@
 1. bash ./scripts/runAllTests.sh
 
 1. HTML report will open on browser, displaying the test results
+
+## How To Implent Errors in Code
+1. Open the OpenmrsUtil.java file
+1. Comment out line 27, this will remove the correct code segment
+
+1. Uncomment line 28, this will activate the error in the code
+
+1. Comment out line 46, this will remove the correct code segment
+
+1. Uncomment line 47, this will activate the error in the code
+
+1. Comment out line 68, this will remove the correct code segment
+
+1. Uncomment line 69, this will activate the error in the code
+
+1. Save the OpenmrsUtil.java file
+
+1. Open the DateUtil.java file
+
+1. Comment out line 20, this will remove the correct code segment
+
+1. Uncomment line 21, this will activate the error in the code
